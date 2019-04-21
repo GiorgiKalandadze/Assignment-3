@@ -19,7 +19,7 @@ import java.awt.event.*;
 		initialize();
 		
 		// Could do this:
-		// setLocationByPlatform(true);
+		setLocationByPlatform(true);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
@@ -44,7 +44,7 @@ import java.awt.event.*;
 		checkBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				 
+				 if(checkBox.isSelected()) solve();
 				
 			}
 		});
@@ -59,10 +59,32 @@ import java.awt.event.*;
 		//Areas
 		westArea = new JTextArea(15, 20);
 		eastArea = new JTextArea(15, 20);
-	
+		
 		westArea.setBorder(new TitledBorder("Puzzle"));
 		eastArea.setBorder(new TitledBorder("Solution"));
 		
+
+		//Listener for westArea/source
+		westArea.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				if(checkBox.isSelected()) solve();
+				
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				if(checkBox.isSelected()) solve();
+				
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				if(checkBox.isSelected()) solve();
+				
+			}
+		});
 		add(westArea, BorderLayout.WEST);
 		add(eastArea, BorderLayout.EAST);
 	}
